@@ -1,4 +1,5 @@
 import { Add, Remove } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -151,17 +152,19 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const navigate = useNavigate()
+  const placeOrder = () => {
+    window.alert("Order Placed Successfully")
+    navigate('/home')
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton onClick={() => {navigate('/home')}}>CONTINUE SHOPPING</TopButton>
+          <TopButton type="filled" onClick={placeOrder}>CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -235,7 +238,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ 80</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button  onClick={placeOrder}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useState} from "react"
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -56,9 +57,11 @@ const Register = () => {
   const [name, setName] = useState("");
   const [phoneno, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     let payload = {
       name: name,
@@ -67,12 +70,17 @@ const Register = () => {
     }
 
     if(name !== "" || phoneno !== "" || password !== ""){
-      axios.post("https://localhost:3001/ecom/signup", payload)
+      axios.post("http://localhost:3001/ecom/signup", payload)
       .then((res) => {
-           if(res.data.statusCode){
-             window.alert("Login Successfull")
+           if(res.data.statusCode === 200){
+             window.alert("Login Successfull");
+             navigate('/home')
            }
       })
+      .catch((error) => {
+        console.log(error)
+      })
+     
     }
        
   }
@@ -80,11 +88,11 @@ const Register = () => {
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input value = {name} onChange = {(e) => {setName(e.target.value)}} placeholder="name" />
-          <Input value = {phoneno} onChange = {(e) => {setPhone(e.target.value)}}  placeholder="phoneo" />
-          <Input value = {password} onChange = {(e) => {setPassword(e.target.value)}} placeholder="password" />
-          <Button onClick={handleSubmit}>CREATE</Button>
+        <Form onSubmit={handleSubmit}>
+          <Input required value = {name} onChange = {(e) => {setName(e.target.value)}} placeholder="name" />
+          <Input required value = {phoneno} onChange = {(e) => {setPhone(e.target.value)}}  placeholder="phoneo" />
+          <Input required type="password" value = {password} onChange = {(e) => {setPassword(e.target.value)}} placeholder="password" />
+          <button >CREATE</button>
         </Form>
       </Wrapper>
     </Container>
