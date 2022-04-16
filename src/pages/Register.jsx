@@ -1,19 +1,16 @@
+import axios from "axios";
+import {useState} from "react"
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: teal;
 `;
 
 const Wrapper = styled.div`
@@ -55,22 +52,39 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+
+  const [name, setName] = useState("");
+  const [phoneno, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const handleSubmit = () => {
+
+    let payload = {
+      name: name,
+      phoneno: phoneno,
+      password: password
+    }
+
+    if(name !== "" || phoneno !== "" || password !== ""){
+      axios.post("https://localhost:3001/ecom/signup", payload)
+      .then((res) => {
+           if(res.data.statusCode){
+             window.alert("Login Successfull")
+           }
+      })
+    }
+       
+  }
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button>CREATE</Button>
+          <Input value = {name} onChange = {(e) => {setName(e.target.value)}} placeholder="name" />
+          <Input value = {phoneno} onChange = {(e) => {setPhone(e.target.value)}}  placeholder="phoneo" />
+          <Input value = {password} onChange = {(e) => {setPassword(e.target.value)}} placeholder="password" />
+          <Button onClick={handleSubmit}>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>

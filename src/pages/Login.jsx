@@ -1,19 +1,15 @@
+import {useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import {mobile} from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: teal;
 `;
 
 const Wrapper = styled.div`
@@ -58,6 +54,9 @@ const Link = styled.a`
 `;
 
 const Login = () => {
+
+const navigate = useNavigate();
+
   return (
     <Container>
       <Wrapper>
@@ -66,8 +65,7 @@ const Login = () => {
           <Input placeholder="username" />
           <Input placeholder="password" />
           <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <button onClick={() => {navigate("/signup")}}>CREATE A NEW ACCOUNT</button>
         </Form>
       </Wrapper>
     </Container>
